@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import generalRoutes from './routes/general.routes';
 import userRoutes from './routes/user.routes';
+import taskRoutes from './routes/task.routes';
 
 const main = async () => {
   dotenv.config();
@@ -44,6 +45,7 @@ const main = async () => {
 
   app.use('/v1', generalRoutes);
   app.use('/v1/user', userRoutes);
+  app.use('/v1/task', taskRoutes);
 
   app.listen(PORT, () =>
     console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`)

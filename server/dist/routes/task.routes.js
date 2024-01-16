@@ -16,8 +16,10 @@ const router = express_1.default.Router({ mergeParams: true });
 router
     .route('/create')
     .post(auth_1.checkApiKey, auth_1.checkToken, (0, validate_1.validate)(task_validation_1.createTaskValidation), task_controller_1.createTask);
+router.route('/all').get(auth_1.checkApiKey, auth_1.checkToken, task_controller_1.getUsersTask);
 router
     .route('/:taskId')
+    .get(auth_1.checkApiKey, auth_1.checkToken, task_controller_1.getTask)
     .put(auth_1.checkApiKey, auth_1.checkToken, (0, validate_1.validate)(task_validation_1.updateTaskValidation), task_controller_1.updateTask)
     .delete(auth_1.checkApiKey, auth_1.checkToken, task_controller_1.deleteTask);
 router

@@ -72,11 +72,22 @@ export const deleteTask = async (req: Request, res: Response) => {
   try {
     const taskId = req?.params?.taskId;
     const user = req?.user;
+    const isExists = await prisma.task.findMany({
+      where: {
+        userId: user?.id,
+        id: +taskId,
+      },
+    });
 
-    const resp = await prisma.task.deleteMany({
+    if (isExists?.length === 0) {
+      throw {
+        statusCode: 409,
+        message: 'Task is not present',
+      };
+    }
+    const resp = await prisma.task.delete({
       where: {
         id: +taskId,
-        userId: +user?.id,
       },
     });
 
@@ -123,11 +134,12 @@ export const getTask = async (req: Request, res: Response) => {
 };
 
 // @desc    GET users Task
-// @route   PUT /v1/task
+// @route   PUT /v1/task/all
 // @access  Protected
 export const getUsersTask = async (req: Request, res: Response) => {
   try {
     const user = req.user;
+    
     const resp = await prisma.task.findMany({
       where: {
         userId: user.id,

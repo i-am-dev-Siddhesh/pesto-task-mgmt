@@ -79,10 +79,21 @@ const deleteTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const taskId = (_a = req === null || req === void 0 ? void 0 : req.params) === null || _a === void 0 ? void 0 : _a.taskId;
         const user = req === null || req === void 0 ? void 0 : req.user;
-        const resp = yield prisma_1.prisma.task.deleteMany({
+        const isExists = yield prisma_1.prisma.task.findMany({
+            where: {
+                userId: user === null || user === void 0 ? void 0 : user.id,
+                id: +taskId,
+            },
+        });
+        if ((isExists === null || isExists === void 0 ? void 0 : isExists.length) === 0) {
+            throw {
+                statusCode: 409,
+                message: 'Task is not present',
+            };
+        }
+        const resp = yield prisma_1.prisma.task.delete({
             where: {
                 id: +taskId,
-                userId: +(user === null || user === void 0 ? void 0 : user.id),
             },
         });
         return res.json({
@@ -128,7 +139,7 @@ const getTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.getTask = getTask;
 // @desc    GET users Task
-// @route   PUT /v1/task
+// @route   PUT /v1/task/all
 // @access  Protected
 const getUsersTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

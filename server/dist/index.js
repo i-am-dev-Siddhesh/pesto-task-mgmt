@@ -22,6 +22,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const general_routes_1 = __importDefault(require("./routes/general.routes"));
 const user_routes_1 = __importDefault(require("./routes/user.routes"));
+const task_routes_1 = __importDefault(require("./routes/task.routes"));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     dotenv_1.default.config();
     const app = (0, express_1.default)();
@@ -50,6 +51,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     }));
     app.use('/v1', general_routes_1.default);
     app.use('/v1/user', user_routes_1.default);
+    app.use('/v1/task', task_routes_1.default);
     app.listen(PORT, () => console.log(`⚡️[server]: Server is running at http://localhost:${PORT}`));
 });
 main().catch((err) => {
