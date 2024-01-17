@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import CustomInput from '../FormControls';
+import CustomInput from '../components/FormControls';
 
 const TaskForm: React.FC = () => {
     const { register, handleSubmit } = useForm();

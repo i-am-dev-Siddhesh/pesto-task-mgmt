@@ -1,11 +1,13 @@
-import TaskForm from '@/components/Forms/Task.form'
-import { Inter } from 'next/font/google'
+import Layout from '@/components/Layout/index.component'
+import TaskForm from '@/src/Forms/Task.form'
 
 
 export default function Home() {
   return (
     <>
-      <TaskForm />
+      <Layout>
+        <TaskForm />
+      </Layout>
     </>
   )
 }
