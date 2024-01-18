@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { FaBuilding, FaUser } from 'react-icons/fa';
 import CreateTaskModal from '../Modal/CreateUpdateTaskModal';
 import UserProfile from '../UserProfile/index.component';
+import { removeBearerToken } from '@/src/utils/tokenUtils';
 
 type MenuItemProps = {
   icon: React.ReactNode;
@@ -42,6 +43,7 @@ type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ show, setter }) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const className =
     'bg-black w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40';
@@ -61,6 +63,11 @@ const Sidebar: React.FC<SidebarProps> = ({ show, setter }) => {
   };
   const handleClose = () => {
     setIsOpen(false);
+  };
+
+  const handleLogout = () => {
+    removeBearerToken();
+    router.push('/signin');
   };
   return (
     <>
@@ -91,8 +98,15 @@ const Sidebar: React.FC<SidebarProps> = ({ show, setter }) => {
             Create Task{' '}
           </button>
         </div>
-        <div className="mb-5 mx-5">
+        <div className="mb-5 mx-5 flex flex-col gap-2">
           <UserProfile name="Siddhesh" profileUrl="" />
+          <button
+            type="button"
+            className=" w-full focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+            onClick={handleLogout}
+          >
+            Logoout
+          </button>
         </div>
       </div>
       <CreateTaskModal isOpen={isOpen} onClose={handleClose} />

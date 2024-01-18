@@ -13,7 +13,7 @@ const TaskForm: React.FC<{ onClose: () => void; task?: any }> = ({
 }) => {
     const { register, handleSubmit, reset, getValues } = useForm();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { fetchTasks } = useFetchTasks()
+    const { fetchTasks } = useFetchTasks();
 
     useEffect(() => {
         reset({
@@ -38,7 +38,7 @@ const TaskForm: React.FC<{ onClose: () => void; task?: any }> = ({
                     dueDate: new Date(data.dueDate),
                     status: 'in_progress',
                 } as any);
-            await fetchTasks()
+            await fetchTasks();
             onClose();
             toast('Task Updated Successfully', { type: 'success' });
         } catch (error) {
@@ -51,29 +51,40 @@ const TaskForm: React.FC<{ onClose: () => void; task?: any }> = ({
     };
 
     return (
-        <form className="max-w-lg mx-auto" onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="font-bold text-2xl">{task?.id ? 'Update' : 'Add'} Task</h2>
-            {fields.map((input, index) => {
-                return (
-                    <div key={index}>
-                        <CustomInput
-                            label={input.label}
-                            name={input.name}
-                            type={input.type}
-                            register={register}
-                        />
-                    </div>
-                );
-            })}
-            <div className="flex items-center  justify-center mt-4">
-                <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex gap-2 items-center"
-                >
-                    {isSubmitting && <Spinner />} Submit
-                </button>
-            </div>
-        </form>
+        <div className="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 w-[650px] !important" style={{ width: "400px" }} >
+            <form
+                className="space-y-6"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit(onSubmit)();
+                }}
+            >
+                <h2 className="font-bold text-2xl text-white">
+                    {task?.id ? 'Update' : 'Add'} Task
+                </h2>
+                {fields.map((input, index) => {
+                    return (
+                        <div key={index}>
+                            <CustomInput
+                                label={input.label}
+                                name={input.name}
+                                type={input.type}
+                                register={register}
+                                required={task ? false : true}
+                            />
+                        </div>
+                    );
+                })}
+                <div className="flex items-center  justify-center mt-4">
+                    <button
+                        type="submit"
+                        className=" flex gap-2 items-center text-white bg-green-700 hover:bg-green-800 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                    >
+                        {isSubmitting && <Spinner />} Submit
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 

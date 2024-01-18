@@ -8,26 +8,31 @@ type TProps = {
   register: UseFormRegister<FieldValues>
   error?: string;
   helperText?: string
+  required: boolean
 };
 
-const CustomInput: React.FC<TProps> = ({ label, name, type, register }) => {
+const CustomInput: React.FC<TProps> = ({ label, name, type, register, error, helperText, required }) => {
   return (
     <div className="mb-4">
-      <label className="block text-inherit text-sm  mb-2" htmlFor={name}>
+      <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        htmlFor={name}>
         {label}
       </label>
       {type === "textarea" ?
         <textarea  {...register(name)}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           id={name}
+          required={required}
         /> :
         <input
           {...register(name)}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           id={name}
           type={type}
+          required={required}
         />
       }
+      <p className={`mt-2 text-sm text-${error ? "red" : "green"}-600 dark:text-green-500`}>{error ? error : helperText}</p>
     </div>
   );
 };

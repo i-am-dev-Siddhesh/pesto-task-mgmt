@@ -36,7 +36,7 @@ const CustomModal: FC<CustomModalProps> = ({ isOpen, onClose, children }) => {
       } fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex items-center justify-center`}
       onClick={handleClickOutside}
     >
-      <div className="bg-white p-8 rounded-md">{children}</div>
+      <div className="rounded-md">{children}</div>
     </div>
   );
 };

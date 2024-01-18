@@ -13,9 +13,7 @@ interface ICreateUpdateTaskModalProps {
 const CreateUpdateTaskModal: FC<ICreateUpdateTaskModalProps> = ({ isOpen, onClose, task }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-            <div>
                 <TaskForm onClose={onClose} task={task} />
-            </div>
         </Modal>
     );
 };
