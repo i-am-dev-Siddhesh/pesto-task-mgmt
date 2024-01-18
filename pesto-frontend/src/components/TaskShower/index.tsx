@@ -67,9 +67,9 @@ const TaskShower: React.FC = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="flex gap-10 mb-10  items-center justify-between">
+      <div className="flex gap-2 md:gap-10 mb-10  items-center justify-between flex-wrap md:flex-nowrap">
         <h1 className="text-3xl font-bold text-center">All Tasks</h1>
-        <div className="flex gap-5">
+        <div className="flex md:gap-5 flex-wrap md:flex-nowrap">
           <FilterAndSorters />
         </div>
       </div>

@@ -18,11 +18,7 @@ const MenuBarMobile: React.FC<MenuBarMobileProps> = ({ setter }) => {
       >
         <Icon />
       </button>
-      <Link href="/login" passHref>
-        <p className="text-3xl flex text-white">
-          <FaUser />
-        </p>
-      </Link>
+     
     </nav>
   );
 };

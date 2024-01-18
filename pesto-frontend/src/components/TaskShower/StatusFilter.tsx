@@ -22,7 +22,7 @@ const FilterAndSorters = () => {
             <div>
                 <label
                     htmlFor="sort_by"
-                    className="block mb-2 text-lg font-medium text-gray-900 text-black"
+                    className="block md:mb-2 text-lg font-medium text-gray-900 text-black"
                 >
                     Filter By
                 </label>
@@ -43,7 +43,7 @@ const FilterAndSorters = () => {
             <div>
                 <label
                     htmlFor="sort_by"
-                    className="block mb-2 text-lg font-medium text-gray-900 text-black"
+                    className="block md:mb-2 text-lg font-medium text-gray-900 text-black"
                 >
                     Sort By
                 </label>
