@@ -2,31 +2,20 @@ import TaskService from '@/src/services/Task';
 import { ITask } from '@/src/types';
 import { errorFormatter, formatDate } from '@/src/utils';
 import React, { useEffect, useState } from 'react';
-import CreateUpdateTaskModal from '../Modal/CreateUpdateTaskModal';
-import CustomModal from '../Modal';
-import FullScreenLoader from '../Loader/FullScreenLoader';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import FullScreenLoader from '../Loader/FullScreenLoader';
+import CustomModal from '../Modal';
+import CreateUpdateTaskModal from '../Modal/CreateUpdateTaskModal';
+import { setUsersTask } from '@/src/store/reducers/user.reducer';
+import { useFetchTasks } from '@/src/hooks/useFetchTasks';
+import { selectTasks } from '@/src/store/selectors/user';
 
 const TaskShower: React.FC = () => {
-  const [tasks, setTasks] = useState<ITask[]>([]);
+  const tasks = useSelector(selectTasks);
   const [task, setTask] = useState<ITask | string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const fetchData = async () => {
-    try {
-      const response = await TaskService.getUsersTask();
-      setTasks(response.data);
-    } catch (error) {
-      
-    }finally{
-        setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { isLoading, fetchTasks } = useFetchTasks();
 
   const handleUpdate: any = async (task: any) => {
     setTask(task);
@@ -36,7 +25,7 @@ const TaskShower: React.FC = () => {
     try {
       setIsOpen(true);
       await TaskService.updateTask({ status: 'done' }, taskId);
-      fetchData();
+      await fetchTasks();
       toast('Task Done Successfully', { type: 'success' });
     } catch (error) {
       const message = errorFormatter(error);
@@ -50,7 +39,7 @@ const TaskShower: React.FC = () => {
     try {
       setIsOpen(true);
       await TaskService.deleteTask(taskId);
-      fetchData();
+      await fetchTasks();
       toast('Task Deleted Successfully', { type: 'success' });
     } catch (error) {
       const message = errorFormatter(error);
@@ -79,7 +68,7 @@ const TaskShower: React.FC = () => {
             <li
               key={task.id}
               className={`mb-4 bg-white border border-${
-                task.status === 'completed'
+                task.status === 'done'
                   ? 'green'
                   : task?.status === 'in_progress'
                   ? 'yellow'
@@ -99,7 +88,7 @@ const TaskShower: React.FC = () => {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 mt-3 justify-between items-center">
-                {task.status !== 'completed' && (
+                {task.status !== 'done' && (
                   <button
                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                     onClick={() => handleTaskComplete(task.id)}

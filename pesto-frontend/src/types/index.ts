@@ -7,7 +7,7 @@ export interface ITask {
   dueDate: string | Date;
   userId: number;
   user: IUser;
-  status: 'in_progress' | 'to_do' | 'completed';
+  status: 'in_progress' | 'to_do' | 'done';
   createdAt: Date;
   updatedAt: Date;
 }
