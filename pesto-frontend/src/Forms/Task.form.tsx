@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import CustomInput from '../components/FormControls';
+import TaskService from '../services/Task';
+import { errorFormatter } from '../utils';
+import { useRouter } from 'next/router';
 
 const TaskForm: React.FC = () => {
+    const router = useRouter()
     const { register, handleSubmit } = useForm();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const onSubmit: SubmitHandler<FieldValues> = (data) => {
-        console.log(data);
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        try {
+            setIsSubmitting(true);
+            const resp = await TaskService.createTask({ ...data, dueDate: new Date(data.dueDate), status: "in_progress" } as any);
+        } catch (error: any) {
+            const message = errorFormatter(error);
+            return;
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -17,14 +30,20 @@ const TaskForm: React.FC = () => {
                     <CustomInput label={input.label} name={input.name} type={input.type} register={register} />
                 </div>
             })}
-            <div className="flex items-center justify-end mt-4">
+            <button
+                type="submit"
+                className="bg-blue-500"
+            >
+                Submit
+            </button>
+            {/* <div className="flex items-center justify-end mt-4">
                 <button
                     type="submit"
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                     Submit
                 </button>
-            </div>
+            </div> */}
         </form>
     );
 };
@@ -40,7 +59,7 @@ const fields = [
     {
         label: 'Description',
         name: 'description',
-        type: "text"
+        type: "textarea"
     },
     {
         label: 'Due Date',

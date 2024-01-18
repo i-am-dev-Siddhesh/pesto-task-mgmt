@@ -173,11 +173,13 @@ export const userUpdateApi = async (req: Request, res: Response) => {
 };
 
 // @desc    GET User
-// @route   GET /v1/auth/user/me
+// @route   GET /v1/user/auth/me
 // @access  Protected
 export const me = async (req: Request, res: Response) => {
   try {
-    const { authorization } = req.headers;
+    const { authorization ,Authorization} = req.headers;
+    console.log('authorization', authorization);
+    console.log('Authorization', Authorization);
 
     if (!authorization || !authorization.startsWith('Bearer ')) {
       throw new Error('Unauthorized');
@@ -191,7 +193,6 @@ export const me = async (req: Request, res: Response) => {
       where: {
         email,
       },
-     
     });
 
     if (user) {

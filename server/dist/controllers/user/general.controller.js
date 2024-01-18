@@ -166,11 +166,13 @@ const userUpdateApi = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.userUpdateApi = userUpdateApi;
 // @desc    GET User
-// @route   GET /v1/auth/user/me
+// @route   GET /v1/user/auth/me
 // @access  Protected
 const me = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { authorization } = req.headers;
+        const { authorization, Authorization } = req.headers;
+        console.log('authorization', authorization);
+        console.log('Authorization', Authorization);
         if (!authorization || !authorization.startsWith('Bearer ')) {
             throw new Error('Unauthorized');
         }

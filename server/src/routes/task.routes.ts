@@ -31,8 +31,4 @@ router
   .put(checkApiKey, checkToken, validate(updateTaskValidation), updateTask)
   .delete(checkApiKey, checkToken, deleteTask);
 
-router
-  .route('/auth/signin')
-  .post(checkApiKey, validate(userLoginSchema), userSignin);
-
 export default router;

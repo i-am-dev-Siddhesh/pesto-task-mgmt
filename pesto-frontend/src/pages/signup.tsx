@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import AuthService from '../services/Auth';
 import { setUser } from '../store/reducers/user.reducer';
 import { errorFormatter } from '../utils';
+import { setBearerToken } from '../utils/tokenUtils';
 
 
 export default function Signup() {
@@ -22,6 +23,7 @@ export default function Signup() {
                 password: values?.password as string,
                 name: values.name as string
             });
+            setBearerToken(resp.data?.token, resp.data?.expirationTime);
             dispatch(setUser({ data: resp?.data?.data }));
             router.push("/");
         } catch (error: any) {

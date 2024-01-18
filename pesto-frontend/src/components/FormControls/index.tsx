@@ -6,8 +6,8 @@ type TProps = {
   name: string;
   type: string;
   register: UseFormRegister<FieldValues>
-  error: string;
-  helperText: string
+  error?: string;
+  helperText?: string
 };
 
 const CustomInput: React.FC<TProps> = ({ label, name, type, register }) => {
@@ -16,12 +16,18 @@ const CustomInput: React.FC<TProps> = ({ label, name, type, register }) => {
       <label className="block text-inherit text-sm  mb-2" htmlFor={name}>
         {label}
       </label>
-      <input
-        {...register(name)}
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id={name}
-        type={type}
-      />
+      {type === "textarea" ?
+        <textarea  {...register(name)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id={name}
+        /> :
+        <input
+          {...register(name)}
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id={name}
+          type={type}
+        />
+      }
     </div>
   );
 };

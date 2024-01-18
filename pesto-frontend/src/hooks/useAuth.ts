@@ -19,15 +19,14 @@ export const useAuth = () => {
       AuthService.getLoggedInUser()
         .then((resp: any) => {
           setUserData(resp.data);
-          console.log('resp', resp.data);
-
           dispatch(setUser({ data: resp.data }));
+          router.push('/');
         })
         .catch(() => {
           router.push('/signin');
         })
         .finally(() => {
-          setIsLoading(false);
+         setIsLoading(false);
         });
     }
   }, []);
