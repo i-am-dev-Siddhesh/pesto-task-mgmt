@@ -41,6 +41,7 @@ export const updateTask = async (req: Request, res: Response) => {
     const data = req.body;
     const user = req.user;
     const taskId = +req.params.taskId;
+    console.log('taskId', taskId,"req.params",req.params.taskId);
 
     const resp = await prisma.task.updateMany({
       data: {
@@ -139,7 +140,7 @@ export const getTask = async (req: Request, res: Response) => {
 export const getUsersTask = async (req: Request, res: Response) => {
   try {
     const user = req.user;
-    
+
     const resp = await prisma.task.findMany({
       where: {
         userId: user.id,

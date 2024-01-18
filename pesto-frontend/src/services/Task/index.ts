@@ -21,8 +21,8 @@ function updateTask(
   data: {
     title?: string;
     description?: string;
-    dueDate?: string;
-    status?: string
+    dueDate?: Date;
+    status?: string;
   },
   taskId: string
 ): Promise<any> {
@@ -38,7 +38,7 @@ const TaskService = {
   updateTask,
   deleteTask,
   getTask,
-  getUsersTask
+  getUsersTask,
 };
 
 export default TaskService;

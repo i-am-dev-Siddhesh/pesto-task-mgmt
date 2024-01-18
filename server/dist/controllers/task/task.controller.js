@@ -50,6 +50,7 @@ const updateTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const data = req.body;
         const user = req.user;
         const taskId = +req.params.taskId;
+        console.log('taskId', taskId, "req.params", req.params.taskId);
         const resp = yield prisma_1.prisma.task.updateMany({
             data: Object.assign({}, data),
             where: {
