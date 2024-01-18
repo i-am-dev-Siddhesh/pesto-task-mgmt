@@ -1,16 +1,15 @@
+import FormAvatar from '@/components/Avatar/FormAvatar.component';
 import Spinner from '@/components/Loader/Spinner';
 import React, { useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import CustomInput from '../components/FormControls';
-import { useFetchTasks } from '../hooks/useFetchTasks';
-import TaskService from '../services/Task';
-import { errorFormatter } from '../utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../store/selectors/user';
-import { IUser } from '../types/author';
 import AuthService from '../services/Auth';
 import { setUser } from '../store/reducers/user.reducer';
+import { selectUser } from '../store/selectors/user';
+import { IUser } from '../types/author';
+import { errorFormatter } from '../utils';
 
 const ProfileForm: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,6 +43,8 @@ const ProfileForm: React.FC = () => {
     }
   };
 
+
+
   return (
     <div
       className="p-4 bg-white rounded-lg sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 w-96 !important"
@@ -57,7 +58,8 @@ const ProfileForm: React.FC = () => {
         }}
       >
         <h2 className="font-bold text-2xl text-white">Update Profile</h2>
-        {fields.map((input, index) => {
+        <FormAvatar name={user.name} imageUrl={user.profile_url as string} />
+        {fields?.map((input, index) => {
           return (
             <div key={index}>
               <CustomInput

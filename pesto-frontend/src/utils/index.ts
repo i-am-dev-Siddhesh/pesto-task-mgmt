@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-export const errorFormatter = (error: any) => {
+export const errorFormatter = (error: any) => {  
   const message =
     error?.response?.data?.message ||
     error?.response?.data?.error ||

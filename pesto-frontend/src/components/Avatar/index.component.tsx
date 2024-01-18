@@ -3,7 +3,7 @@ import { FaUserCircle } from 'react-icons/fa';
 
 type AvatarProps = {
     size?: number;
-    imageUrl?: string;
+    imageUrl?: string | null;
     altText?: string;
 };
 

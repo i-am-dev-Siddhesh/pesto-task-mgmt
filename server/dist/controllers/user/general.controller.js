@@ -116,7 +116,6 @@ const userUpdateApi = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         let data = req.body;
         const author = req.user;
-        console.log('author', author);
         const user = yield prisma_1.prisma.user.findUnique({
             where: {
                 id: author.id,
@@ -157,7 +156,6 @@ const userUpdateApi = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
     catch (error) {
-        console.log(error);
         let statusCode = 500;
         if (error.statusCode) {
             statusCode = error.statusCode;

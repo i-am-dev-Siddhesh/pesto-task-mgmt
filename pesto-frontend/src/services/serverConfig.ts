@@ -24,6 +24,7 @@ const formDataInstance = axios.create({
     apikey: process.env.NEXT_PUBLIC_SERVER_API_KEY as string,
     Accept: 'application/json',
     'content-type': 'multipart/form-data',
+    Authorization: 'Bearer ' + getBearerToken(),
   },
   withCredentials: true,
 });
@@ -126,17 +127,17 @@ const delet = (
     .catch((error: AxiosError) => requestFailureCallback(url, error));
 };
 
-const formDataPost = (
+const formDataPut = (
   url: string,
   params?: Record<string, any>,
   data?: Record<string, any>
 ): Promise<any> => {
   return formDataInstance
-    .post(url, data, {
+    .put(url, data, {
       params,
     })
     .then((response: AxiosResponse) => response.data)
     .catch((error: AxiosError) => requestFailureCallback(url, error));
 };
 
-export { get, post, put, postWithServerResponse, patch, delet, formDataPost };
+export { get, post, put, postWithServerResponse, patch, delet, formDataPut };

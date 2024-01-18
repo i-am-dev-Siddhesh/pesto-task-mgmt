@@ -115,7 +115,6 @@ export const userUpdateApi = async (req: Request, res: Response) => {
   try {
     let data = req.body;
     const author = req.user;
-    console.log('author', author);
 
     const user = await prisma.user.findUnique({
       where: {
@@ -144,7 +143,7 @@ export const userUpdateApi = async (req: Request, res: Response) => {
       const result = await uploadToS3(req.file);
       data.profile_url = result.Location;
     }
-
+    
     if (data.password) {
       const hash = await argon2.hash(data.password);
       delete data.passwordConfirmation;
@@ -163,8 +162,6 @@ export const userUpdateApi = async (req: Request, res: Response) => {
       data: resp,
     });
   } catch (error: any) {
-    console.log(error);
-
     let statusCode = 500;
     if (error.statusCode) {
       statusCode = error.statusCode;

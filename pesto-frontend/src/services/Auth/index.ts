@@ -1,4 +1,4 @@
-import { get, postWithServerResponse, put } from '@/services/serverConfig';
+import { formDataPut, get, postWithServerResponse, put } from '@/services/serverConfig';
 import Services from '../serviceUrls';
 import { LoginProps, SignupProps } from './types';
 
@@ -8,6 +8,10 @@ function getLoggedInUser(): Promise<string> {
 
 function updateUser(data: any): Promise<any> {
   return put(Services.updateUser, {}, data);
+}
+
+function updateUserProfile(data: any): Promise<any> {
+  return formDataPut(Services.updateUser, {}, data);
 }
 
 
@@ -24,7 +28,8 @@ const AuthService = {
   getLoggedInUser,
   SigninUser,
   SignupUser,
-  updateUser
+  updateUser,
+  updateUserProfile
 };
 
 export default AuthService;
