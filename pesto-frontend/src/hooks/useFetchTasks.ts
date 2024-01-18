@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import TaskService from '../services/Task';
 import { setUsersTask } from '../store/reducers/user.reducer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectTasks } from '../store/selectors/user';
 
 export const useFetchTasks = () => {
+  const tasks = useSelector(selectTasks);
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -17,10 +19,6 @@ export const useFetchTasks = () => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
 
   return { isLoading, fetchTasks };
 };

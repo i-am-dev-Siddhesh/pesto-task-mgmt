@@ -3,7 +3,7 @@ import TaskService from '@/src/services/Task';
 import { selectTasks } from '@/src/store/selectors/user';
 import { ITask } from '@/src/types';
 import { errorFormatter, formatDate } from '@/src/utils';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ import FullScreenLoader from '../Loader/FullScreenLoader';
 import CustomModal from '../Modal';
 import CreateUpdateTaskModal from '../Modal/CreateUpdateTaskModal';
 import FilterAndSorters from './StatusFilter';
+import NoTasksFound from './NoTasksFound';
 
 const TaskShower: React.FC = () => {
   const tasks = useSelector(selectTasks);
@@ -58,6 +59,11 @@ const TaskShower: React.FC = () => {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    if (tasks?.length === 0) {
+      fetchTasks();
+    }
+  }, []);
 
   return (
     <div className="container mx-auto">
@@ -70,18 +76,18 @@ const TaskShower: React.FC = () => {
 
       {isLoading ? (
         <p>Loading...</p>
-      ) : (
+      ) : tasks.length === 0 ? <><NoTasksFound /></> : (
         <ul className="flex gap-10 flex-wrap">
           {tasks.map((task) => (
             <li
               key={task.id}
               className={`mb-4 bg-white border border-${task.status === 'done'
-                  ? 'green'
-                  : task?.status === 'in_progress'
-                    ? 'yellow'
-                    : task?.status === 'to_do'
-                      ? 'red'
-                      : 'yellow'
+                ? 'green'
+                : task?.status === 'in_progress'
+                  ? 'yellow'
+                  : task?.status === 'to_do'
+                    ? 'red'
+                    : 'yellow'
                 }-300 rounded-md p-6 shadow-md md:w-[320px] flex flex-col justify-between gap-2 relative`}
             >
               {task.status === 'done' && <FaCheckCircle color="green" className="absolute top-3 right-3" />}

@@ -36,7 +36,7 @@ const TaskForm: React.FC<{ onClose: () => void; task?: any }> = ({
                 : await TaskService.createTask({
                     ...data,
                     dueDate: new Date(data.dueDate),
-                    status: 'in_progress',
+                    status: 'to_do',
                 } as any);
             await fetchTasks();
             onClose();
