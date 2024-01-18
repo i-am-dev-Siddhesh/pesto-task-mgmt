@@ -1,6 +1,10 @@
 import { delet, get, post, put } from '@/services/serverConfig';
 import Services from '../serviceUrls';
 
+function getUsersTask(): Promise<any> {
+  return get(Services.getUsersTask);
+}
+
 function getTask(taskId: string): Promise<any> {
   return get(`${Services.getTask}${taskId}`);
 }
@@ -18,6 +22,7 @@ function updateTask(
     title?: string;
     description?: string;
     dueDate?: string;
+    status?: string
   },
   taskId: string
 ): Promise<any> {
@@ -33,6 +38,7 @@ const TaskService = {
   updateTask,
   deleteTask,
   getTask,
+  getUsersTask
 };
 
 export default TaskService;

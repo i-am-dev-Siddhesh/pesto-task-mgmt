@@ -4,6 +4,7 @@ const Services = {
   Signup: 'user/auth/signup',
 
   createTask: 'task/create',
+  getUsersTask: 'task/all',
   getTask: 'task/',
   deleteTask: 'task/',
   updateTask: 'task/',
