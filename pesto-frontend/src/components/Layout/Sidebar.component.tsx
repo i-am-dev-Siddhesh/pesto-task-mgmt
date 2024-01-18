@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { FaUser } from 'react-icons/fa';
+import { FaBuilding, FaUser } from 'react-icons/fa';
 import UserProfile from '../UserProfile/index.component';
 
 type MenuItemProps = {
@@ -60,7 +60,8 @@ const Sidebar: React.FC<SidebarProps> = ({ show, setter }) => {
         className={`${className}${appendClass} flex flex-col justify-between`}
       >
         <div className="flex flex-col mt-5">
-          <MenuItem name="Home" route="/" icon={<FaUser />} setter={setter} />
+          <MenuItem name="Home" route="/" icon={<FaBuilding />} setter={setter} />
+          <MenuItem name="Profile" route="/profile" icon={<FaUser />} setter={setter} />
         </div>
         <div className="mb-5 mx-5">
           <UserProfile name="Siddhesh" profileUrl="" />

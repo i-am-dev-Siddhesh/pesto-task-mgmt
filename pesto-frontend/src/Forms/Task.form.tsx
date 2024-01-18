@@ -11,6 +11,7 @@ const TaskForm: React.FC = () => {
 
     return (
         <form className="max-w-lg mx-auto" onSubmit={handleSubmit(onSubmit)}>
+            <h2 className='font-bold text-2xl'>Add Task</h2>
             {fields.map((input, index) => {
                 return <div key={index}>
                     <CustomInput label={input.label} name={input.name} type={input.type} register={register} />

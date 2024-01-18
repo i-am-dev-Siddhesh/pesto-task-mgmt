@@ -1,23 +1,24 @@
-import { post, postWithServerResponse, put } from "@/services/serverConfig";
-import Services from "../serviceUrls";
-import { LoginProps } from "./types";
+import { post, postWithServerResponse, put } from '@/services/serverConfig';
+import Services from '../serviceUrls';
+import { LoginProps, SignupProps } from './types';
 
 function getLoggedInUser(): Promise<string> {
   return post(Services.Me);
 }
 
-function loginUser(data: LoginProps): Promise<any> {
-  return postWithServerResponse(Services.Login, {}, data);
+function SigninUser(data: LoginProps): Promise<any> {
+  return postWithServerResponse(Services.Signin, {}, data);
 }
 
-function logoutUser(): Promise<string> {
-  return put(Services.Logout);
+
+function SignupUser(data: SignupProps): Promise<any> {
+  return postWithServerResponse(Services.Signup, {}, data);
 }
 
 const AuthService = {
   getLoggedInUser,
-  loginUser,
-  logoutUser,
+  SigninUser,
+  SignupUser
 };
 
 export default AuthService;

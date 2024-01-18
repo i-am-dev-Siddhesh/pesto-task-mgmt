@@ -6,12 +6,14 @@ type TProps = {
   name: string;
   type: string;
   register: UseFormRegister<FieldValues>
+  error: string;
+  helperText: string
 };
 
 const CustomInput: React.FC<TProps> = ({ label, name, type, register }) => {
   return (
     <div className="mb-4">
-      <label className="block text-white text-sm  mb-2" htmlFor={name}>
+      <label className="block text-inherit text-sm  mb-2" htmlFor={name}>
         {label}
       </label>
       <input

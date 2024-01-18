@@ -3,3 +3,10 @@ export type LoginProps = {
   password: String;
 };
 
+
+export type SignupProps = {
+  name: String
+  email: String;
+  password: String;
+};
+
