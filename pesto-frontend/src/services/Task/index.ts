@@ -1,8 +1,8 @@
 import { delet, get, post, put } from '@/services/serverConfig';
 import Services from '../serviceUrls';
 
-function getUsersTask(): Promise<any> {
-  return get(Services.getUsersTask);
+function fetchUsersTask(filters?: any): Promise<any> {
+  return post(Services.fetchUsersTask, {}, filters);
 }
 
 function getTask(taskId: string): Promise<any> {
@@ -38,7 +38,7 @@ const TaskService = {
   updateTask,
   deleteTask,
   getTask,
-  getUsersTask,
+  fetchUsersTask,
 };
 
 export default TaskService;

@@ -4,7 +4,7 @@ import {
   createTask,
   deleteTask,
   getTask,
-  getUsersTask,
+  fetchUsersTask,
   updateTask,
 } from '../controllers/task/task.controller';
 import { userSignin } from '../controllers/user/general.controller';
@@ -13,6 +13,7 @@ import { validate } from '../middlewares/validate';
 import { userLoginSchema } from '../validations/auth';
 import {
   createTaskValidation,
+  fetchTasksValidation,
   updateTaskValidation,
 } from '../validations/task.validation';
 
@@ -23,7 +24,9 @@ const router = express.Router({ mergeParams: true });
 router
   .route('/create')
   .post(checkApiKey, checkToken, validate(createTaskValidation), createTask);
-router.route('/all').get(checkApiKey, checkToken, getUsersTask);
+router
+  .route('/all')
+  .post(checkApiKey, checkToken, validate(fetchTasksValidation), fetchUsersTask);
 
 router
   .route('/:taskId')

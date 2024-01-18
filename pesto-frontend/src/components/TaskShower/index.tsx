@@ -1,15 +1,16 @@
+import { useFetchTasks } from '@/src/hooks/useFetchTasks';
 import TaskService from '@/src/services/Task';
+import { selectTasks } from '@/src/store/selectors/user';
 import { ITask } from '@/src/types';
 import { errorFormatter, formatDate } from '@/src/utils';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { FaCheckCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import FullScreenLoader from '../Loader/FullScreenLoader';
 import CustomModal from '../Modal';
 import CreateUpdateTaskModal from '../Modal/CreateUpdateTaskModal';
-import { setUsersTask } from '@/src/store/reducers/user.reducer';
-import { useFetchTasks } from '@/src/hooks/useFetchTasks';
-import { selectTasks } from '@/src/store/selectors/user';
+import FilterAndSorters from './StatusFilter';
 
 const TaskShower: React.FC = () => {
   const tasks = useSelector(selectTasks);
@@ -57,9 +58,16 @@ const TaskShower: React.FC = () => {
     setIsOpen(false);
   };
 
+
   return (
-    <div className="container mx-auto my-8">
-      <h1 className="text-3xl font-bold mb-4">Tasks</h1>
+    <div className="container mx-auto">
+      <div className="flex gap-10 mb-10  items-center justify-between">
+        <h1 className="text-3xl font-bold text-center">All Tasks</h1>
+        <div className="flex gap-5">
+          <FilterAndSorters />
+        </div>
+      </div>
+
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -67,16 +75,16 @@ const TaskShower: React.FC = () => {
           {tasks.map((task) => (
             <li
               key={task.id}
-              className={`mb-4 bg-white border border-${
-                task.status === 'done'
+              className={`mb-4 bg-white border border-${task.status === 'done'
                   ? 'green'
                   : task?.status === 'in_progress'
-                  ? 'yellow'
-                  : task?.status === 'to_do'
-                  ? 'red'
-                  : 'yellow'
-              }-300 rounded-md p-6 shadow-md min-w-[250px] flex flex-col justify-between gap-2`}
+                    ? 'yellow'
+                    : task?.status === 'to_do'
+                      ? 'red'
+                      : 'yellow'
+                }-300 rounded-md p-6 shadow-md md:w-[320px] flex flex-col justify-between gap-2 relative`}
             >
+              {task.status === 'done' && <FaCheckCircle color="green" className="absolute top-3 right-3" />}
               <h2 className="text-xl font-semibold text-gray-800">
                 {task.title}
               </h2>

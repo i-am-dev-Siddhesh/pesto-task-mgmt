@@ -41,7 +41,7 @@ export const updateTask = async (req: Request, res: Response) => {
     const data = req.body;
     const user = req.user;
     const taskId = +req.params.taskId;
-    console.log('taskId', taskId,"req.params",req.params.taskId);
+    console.log('taskId', taskId, 'req.params', req.params.taskId);
 
     const resp = await prisma.task.updateMany({
       data: {
@@ -137,13 +137,21 @@ export const getTask = async (req: Request, res: Response) => {
 // @desc    GET users Task
 // @route   PUT /v1/task/all
 // @access  Protected
-export const getUsersTask = async (req: Request, res: Response) => {
+export const fetchUsersTask = async (req: Request, res: Response) => {
   try {
     const user = req.user;
+    let { orderBy, ...filters } = req.body;
+    let conditions: any = {
+      userId: user.id,
+    };
+    if (filters.status) {
+      conditions.status = filters.status;
+    }
 
     const resp = await prisma.task.findMany({
-      where: {
-        userId: user.id,
+      where: conditions,
+      orderBy: {
+        dueDate: orderBy || 'asc',
       },
     });
 

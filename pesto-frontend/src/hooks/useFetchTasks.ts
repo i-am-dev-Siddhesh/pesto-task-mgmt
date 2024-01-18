@@ -7,9 +7,10 @@ export const useFetchTasks = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchTasks = async () => {
+  const fetchTasks = async (filters?: any) => {
     try {
-      const response = await TaskService.getUsersTask();
+      setIsLoading(true);
+      const response = await TaskService.fetchUsersTask(filters || {});
       dispatch(setUsersTask({ data: response.data }));
     } catch (error) {
     } finally {

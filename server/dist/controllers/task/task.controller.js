@@ -8,8 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsersTask = exports.getTask = exports.deleteTask = exports.updateTask = exports.createTask = void 0;
+exports.fetchUsersTask = exports.getTask = exports.deleteTask = exports.updateTask = exports.createTask = void 0;
 const prisma_1 = require("../../clients/prisma");
 const errorResponse_1 = require("../../utils/errorResponse");
 // @desc    Create Task
@@ -50,7 +61,7 @@ const updateTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const data = req.body;
         const user = req.user;
         const taskId = +req.params.taskId;
-        console.log('taskId', taskId, "req.params", req.params.taskId);
+        console.log('taskId', taskId, 'req.params', req.params.taskId);
         const resp = yield prisma_1.prisma.task.updateMany({
             data: Object.assign({}, data),
             where: {
@@ -142,12 +153,20 @@ exports.getTask = getTask;
 // @desc    GET users Task
 // @route   PUT /v1/task/all
 // @access  Protected
-const getUsersTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const fetchUsersTask = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.user;
+        let _b = req.body, { orderBy } = _b, filters = __rest(_b, ["orderBy"]);
+        let conditions = {
+            userId: user.id,
+        };
+        if (filters.status) {
+            conditions.status = filters.status;
+        }
         const resp = yield prisma_1.prisma.task.findMany({
-            where: {
-                userId: user.id,
+            where: conditions,
+            orderBy: {
+                dueDate: orderBy || 'asc',
             },
         });
         return res.json({
@@ -163,4 +182,4 @@ const getUsersTask = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return res.status(statusCode).json((0, errorResponse_1.generalError)(error));
     }
 });
-exports.getUsersTask = getUsersTask;
+exports.fetchUsersTask = fetchUsersTask;
