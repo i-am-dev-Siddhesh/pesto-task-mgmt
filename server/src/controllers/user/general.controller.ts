@@ -115,6 +115,7 @@ export const userUpdateApi = async (req: Request, res: Response) => {
   try {
     let data = req.body;
     const author = req.user;
+    console.log('author', author);
 
     const user = await prisma.user.findUnique({
       where: {
@@ -177,7 +178,7 @@ export const userUpdateApi = async (req: Request, res: Response) => {
 // @access  Protected
 export const me = async (req: Request, res: Response) => {
   try {
-    const { authorization ,Authorization} = req.headers;
+    const { authorization, Authorization } = req.headers;
     console.log('authorization', authorization);
     console.log('Authorization', Authorization);
 

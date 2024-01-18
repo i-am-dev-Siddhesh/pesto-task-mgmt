@@ -3,6 +3,12 @@ import { RootState } from '../index';
 
 const selectUserState = (state: RootState) => state.user;
 
+export const selectUser = createSelector(
+  selectUserState,
+  (user) => user?.user ||[]
+);
+
+
 export const selectTasks = createSelector(
   selectUserState,
   (user) => user?.tasks ||[]

@@ -116,6 +116,7 @@ const userUpdateApi = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         let data = req.body;
         const author = req.user;
+        console.log('author', author);
         const user = yield prisma_1.prisma.user.findUnique({
             where: {
                 id: author.id,

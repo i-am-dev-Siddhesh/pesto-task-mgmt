@@ -7,6 +7,7 @@ import AuthService from '../services/Auth';
 import { setUser } from '../store/reducers/user.reducer';
 import { errorFormatter } from '../utils';
 import { setBearerToken } from '../utils/tokenUtils';
+import { toast } from 'react-toastify';
 
 
 export default function Signin() {
@@ -24,13 +25,15 @@ export default function Signin() {
             });
             setBearerToken(resp.data?.token, resp.data?.expirationTime);
             dispatch(setUser({ data: resp?.data?.data }));
+            toast("Logged In successfully", { type: 'success' });
             router.push("/");
         } catch (error: any) {
             const message = errorFormatter(error);
+            toast(message, { type: 'error' });
             return;
         } finally {
             setIsSubmitting(false);
-        }
+        } 
     };
 
     return (
