@@ -87,16 +87,8 @@ const Sidebar: React.FC<SidebarProps> = ({ show, setter }) => {
             icon={<FaUser />}
             setter={setter}
           />
-          <button
-            className="bg-white-500 text-white pl-6 flex items-center gap-2"
-            onClick={handleOpen}
-          >
-            <div className="text-xl flex [&>*]:mx-auto w-[30px]">
-              {' '}
-              <FaUser />
-            </div>
-            Create Task{' '}
-          </button>
+          <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 flex items-center gap-2 mx-5"  onClick={handleOpen}><FaUser />Create Task</button>
+           
         </div>
         <div className="mb-5 mx-5 flex flex-col gap-2">
           <UserProfile name="Siddhesh" profileUrl="" />
