@@ -1,6 +1,6 @@
 import AuthService from '@/src/services/Auth';
 import { errorFormatter } from '@/src/utils';
-import React, { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface FormAvatarProps {
@@ -31,7 +31,7 @@ const FormAvatar: React.FC<FormAvatarProps> = ({
       }
       let data = new FormData();
       data.append("image", file)
-      const ad = await AuthService.updateUserProfile(data).then(
+      await AuthService.updateUserProfile(data).then(
         (resp) => {
           toast("Profile updated", { type: 'success' });
           return resp.data
@@ -39,6 +39,8 @@ const FormAvatar: React.FC<FormAvatarProps> = ({
       ).catch((error) => {
         const message = errorFormatter(error);
         toast(message, { type: 'error' });
+      }).finally(() => {
+        toast("Profile updation will work when aws will integrate", { type: 'info' });
       })
     }
   };
