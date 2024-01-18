@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import TaskService from '../services/Task';
 import { setUsersTask } from '../store/reducers/user.reducer';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectTasks } from '../store/selectors/user';
 
 export const useFetchTasks = () => {
-  const tasks = useSelector(selectTasks);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchTasks = async (filters?: any) => {
     try {
